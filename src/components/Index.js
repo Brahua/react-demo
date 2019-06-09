@@ -21,10 +21,10 @@ function getGreeting(user) {
 
 function UserCards(props){
     const users = props.users.map(user => (
-      <div className="col-4" key={user.id}>
+      <div className="col-sm-12 col-md-6 col-lg-4" key={user.id}>
         <div
           className="card bg-light mb-3 border-info"
-          style={{ maxWidth: "18rem", marginTop: 10 }}
+          style={{ marginTop: 10 }}
         >
           <div className="card-header text-info">{user.name}</div>
           <div className="card-body text-dark">
@@ -50,7 +50,7 @@ class Index extends Component {
       users: []
     };
     this.handleAlertClick = this.handleAlertClick.bind(this);
-    //this.handleGetPersons = this.handleGetPersons.bind(this);
+    this.handleGetPersons = this.handleGetPersons.bind(this);
   }
   handleAlertClick(e) {
     e.preventDefault();
@@ -97,8 +97,10 @@ class Index extends Component {
           <img src={logo} className="app-logo" alt="logo" />
           <Reloj />
 
-          <div className="row p-3 d-flex justify-content-between flex-wrap">
+          <div className="row p-3">
+            <div className="col-12 d-flex justify-content-center flex-wrap">
               <UserCards users={this.state.users} />
+            </div>
           </div>
 
           <button
