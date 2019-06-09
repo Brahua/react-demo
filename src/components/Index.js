@@ -47,9 +47,14 @@ class Index extends Component {
     super(props);
     this.state = {
       alertClick: false,
-      users: []
+      users: [],
+      form: false,
+      email: '',
+      contrasenia: ''
     };
     this.handleAlertClick = this.handleAlertClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     //this.handleGetPersons = this.handleGetPersons.bind(this);
   }
   handleAlertClick(e) {
@@ -66,6 +71,16 @@ class Index extends Component {
           users: users
         })
       );
+  }
+  handleChange(e){
+    this.setState({
+      email: e.target.email,
+      contrasenia: e.target.contrasenia
+    })
+  }
+  handleSubmit(e){
+    alert('Correo: ' + this.state.email + '\nContraseña: ' + this.state.contrasenia)
+    e.preventDefault();
   }
   componentDidMount() {
     this.handleGetPersons();
@@ -98,16 +113,55 @@ class Index extends Component {
           <Reloj />
 
           <div className="row p-3 d-flex justify-content-between flex-wrap">
+            {this.state.form ? (
+              <div className="mt-3 col-12 d-flex justify-content-center">
+                <form className="col-md-6" onSubmit={this.handleSubmit}>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputEmail1">Email</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="exampleInputEmail1"
+                      aria-describedby="emailHelp"
+                      placeholder="Ingrese su correo"
+                      value={this.state.email}
+                      onChange={this.handleChange}
+                    />
+                    <small id="emailHelp" className="form-text text-muted">
+                      We'll never share your email with anyone else.
+                    </small>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleInputPassword1">
+                      Contraseña
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="exampleInputPassword1"
+                      placeholder="Contraseña"
+                      value={this.state.contrasenia}
+                      onChange={this.handleChange}
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary">
+                    Enviar
+                  </button>
+                </form>
+              </div>
+            ) : (
               <UserCards users={this.state.users} />
+            )}
           </div>
-
-          <button
-            type="button"
-            className="btn btn-info"
-            onClick={this.handleAlertClick}
-          >
-            {this.state.alertClick === true ? "Ocultar" : "Click me!"}
-          </button>
+          {!this.state.form && (
+            <button
+              type="button"
+              className="btn btn-info"
+              onClick={this.handleAlertClick}
+            >
+              {this.state.alertClick === true ? "Ocultar" : "Click me!"}
+            </button>
+          )}
         </div>
       </>
     );
