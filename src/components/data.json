@@ -1,0 +1,16 @@
+{
+    "cargos":[
+        {
+            "id": 1,
+            "nombre": "Ingeniero de Software"
+        },
+        {
+            "id": 2,
+            "nombre": "Ingeniero Civil"
+        },
+        {
+            "id": 3,
+            "nombre": "Ingeniero Electrónico"
+        }
+    ]
+}

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Reloj from "./Reloj";
+import Form from "./Form";
 import logo from "./../logo.svg";
 import "./Index.css";
 
@@ -18,13 +19,12 @@ function getGreeting(user) {
     return <h4>Hola extraño</h4>;
   }
 }
-
 function UserCards(props){
     const users = props.users.map(user => (
-      <div className="col-4" key={user.id}>
+      <div className="col-sm-12 col-md-6 col-lg-4" key={user.id}>
         <div
           className="card bg-light mb-3 border-info"
-          style={{ maxWidth: "18rem", marginTop: 10 }}
+          style={{ marginTop: 10 }}
         >
           <div className="card-header text-info">{user.name}</div>
           <div className="card-body text-dark">
@@ -42,20 +42,19 @@ function UserCards(props){
     return users;
 }
 
+
+
 class Index extends Component {
   constructor(props) {
     super(props);
     this.state = {
       alertClick: false,
       users: [],
-      form: false,
-      email: '',
-      contrasenia: ''
+      form: true,
     };
     this.handleAlertClick = this.handleAlertClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    //this.handleGetPersons = this.handleGetPersons.bind(this);
+    this.handleGetPersons = this.handleGetPersons.bind(this);
+
   }
   handleAlertClick(e) {
     e.preventDefault();
@@ -72,16 +71,7 @@ class Index extends Component {
         })
       );
   }
-  handleChange(e){
-    this.setState({
-      email: e.target.email,
-      contrasenia: e.target.contrasenia
-    })
-  }
-  handleSubmit(e){
-    alert('Correo: ' + this.state.email + '\nContraseña: ' + this.state.contrasenia)
-    e.preventDefault();
-  }
+  
   componentDidMount() {
     this.handleGetPersons();
   }
@@ -112,56 +102,26 @@ class Index extends Component {
           <img src={logo} className="app-logo" alt="logo" />
           <Reloj />
 
-          <div className="row p-3 d-flex justify-content-between flex-wrap">
+          <div className="row p-3">
             {this.state.form ? (
               <div className="mt-3 col-12 d-flex justify-content-center">
-                <form className="col-md-6" onSubmit={this.handleSubmit}>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email</label>
-                    <input
-                      type="email"
-                      className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="Ingrese su correo"
-                      value={this.state.email}
-                      onChange={this.handleChange}
-                    />
-                    <small id="emailHelp" className="form-text text-muted">
-                      We'll never share your email with anyone else.
-                    </small>
-                  </div>
-                  <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">
-                      Contraseña
-                    </label>
-                    <input
-                      type="password"
-                      className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Contraseña"
-                      value={this.state.contrasenia}
-                      onChange={this.handleChange}
-                    />
-                  </div>
-                  <button type="submit" className="btn btn-primary">
-                    Enviar
-                  </button>
-                </form>
+                <Form/>
               </div>
             ) : (
-              <UserCards users={this.state.users} />
+              <div className="col-12 d-flex justify-content-center flex-wrap">
+                <UserCards users={this.state.users} />
+              </div>
+            )}
+            {!this.state.form && (
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={this.handleAlertClick}
+              >
+                {this.state.alertClick === true ? "Ocultar" : "Click me!"}
+              </button>
             )}
           </div>
-          {!this.state.form && (
-            <button
-              type="button"
-              className="btn btn-info"
-              onClick={this.handleAlertClick}
-            >
-              {this.state.alertClick === true ? "Ocultar" : "Click me!"}
-            </button>
-          )}
         </div>
       </>
     );
