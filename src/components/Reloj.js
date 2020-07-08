@@ -14,10 +14,10 @@ class Reloj extends Component {
         }, 1000);    
     }
 
-    componentWillMount() {
+    componentWillUnmount() {
         clearInterval(this.timerID);   
     }
-
+    
     update(){
         this.setState({
             date: new Date()
